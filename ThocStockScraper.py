@@ -41,8 +41,8 @@ def getOldStock(type):
 def findDifference(type):
     oldStock = getOldStock(type)
     currentStock = matches
-    difference = len(numpy.setdiff1d(currentStock,oldStock))>0
-    if difference:
+    difference = numpy.setdiff1d(currentStock,oldStock)
+    if len(difference)>0:
         print("{}: New Stock found! New items:".format(type))
         print(difference)
         print("Old Stock: {}".format(oldStock))
