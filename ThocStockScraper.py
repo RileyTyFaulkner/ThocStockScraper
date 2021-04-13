@@ -3,6 +3,7 @@ import re #For dissecting raw HTML grabbed via Requests
 import numpy #For comparing New Stock List and Old Stock List
 import os #For overwriting Old stock with evaluated New stock
 import time
+import io
 
 def getCurrentStock(type):
     global matches
@@ -24,8 +25,11 @@ def getCurrentStock(type):
     listToStr = map(str,matches)
     stringForFile = '\n'.join(listToStr)
     fileName = "New {} Stock.txt".format(type)
-    with open(fileName, "w") as file:
+    with io.open(fileName, "w", encoding="utf-8") as file:
         file.write(stringForFile)
+    #Old Saving method, got mad at some characters.
+    #with open(fileName, "w") as file:
+    #    file.write(stringForFile)
 
 def overwriteOldStock(type):
     oldFile = "Old {} Stock.txt".format(type)
@@ -34,7 +38,9 @@ def overwriteOldStock(type):
     os.rename(newFile,oldFile)
 
 def getOldStock(type):
-    with open("Old {} Stock.txt".format(type)) as file:
+    #with open("Old {} Stock.txt".format(type)) as file:
+    #    oldStock = file.read().split('\n')
+    with io.open("Old {} Stock.txt".format(type), "r", encoding="utf-8") as file:
         oldStock = file.read().split('\n')
     return(oldStock)
 
@@ -45,8 +51,8 @@ def findDifference(type):
     if len(difference)>0:
         print("{}: New Stock found! New items:".format(type))
         print(difference)
-        print("Old Stock: {}".format(oldStock))
-        print("New Stock: {}".format(currentStock))
+        #print("Old Stock: {}".format(oldStock))
+        #print("New Stock: {}".format(currentStock))
         print("Old Stock overwritten.")
         overwriteOldStock(type)
     else:
@@ -61,4 +67,4 @@ while x:
     for stock in types:
         getCurrentStock(stock)
         findDifference(stock)
-    time.sleep(600)
+    time.sleep(60)
