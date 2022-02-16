@@ -14,4 +14,5 @@ TO-DO:
   Add functionality to alert user beyond the console. Pop-up, Email, SMS, etc.(Though this might be better suited for a completely new script)
   
 USAGE:
-Current usage leverages cron (or event scheduler) to run this script periodically. 
+Current usage leverages event scheduler (or cron) to run this script periodically. 
+Output is text files containing logged changes.
